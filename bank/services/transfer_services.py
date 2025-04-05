@@ -51,12 +51,28 @@ def transferService(request, sender_id, receiver_id, value):
     )
 
     # Simulando a autorização externa
-    auth_response = requests.get("https://util.devi.tools/api/v2/authorize")
-    if auth_response.status_code != 200:
+    try:
+        auth_response = requests.get("https://util.devi.tools/api/v2/authorize")
+        #caso a resposta não seja 200, cancelamos a transferência
+        if auth_response.status_code != 200:
+            transfer.status = "cancelada"
+            transfer.save()
+
+            # Marca a transação como falhada
+            transaction.status = "falhou"
+            transaction.save()
+
+            sender_account.balance += Decimal(str(value))
+            sender_account.save()
+
+            send_transfer_failure_email(request.user.email, receiver_account.user.email, value)
+
+            raise ValueError("Falha na autorização externa. Transação revertida.")
+    except requests.RequestException as e:
+        # Se ocorrer qualquer outro erro, cancelamos a transferência
         transfer.status = "cancelada"
         transfer.save()
 
-        # Marca a transação como falhada
         transaction.status = "falhou"
         transaction.save()
 

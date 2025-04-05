@@ -25,6 +25,7 @@ services:
       - .env
     environment:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}*10@db/mydb
+      - USE_DOCKER=true
 
 volumes:
   postgres_data:
