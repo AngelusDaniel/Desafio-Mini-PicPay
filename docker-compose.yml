@@ -24,8 +24,11 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}*10@db/mydb
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/mydb
       - USE_DOCKER=true
+    dns:
+      - 8.8.8.8  
+      - 8.8.4.4  
 
 volumes:
   postgres_data:
