@@ -134,14 +134,16 @@ O projeto usa o Docker para criar um ambiente isolado para a aplicação e o ban
 
 ## Requisitos
 
-- O payer deve ter saldo suficiente.
-- O payee pode ser um usuário comum ou lojista.
+- O sender deve ter saldo suficiente.
+- O receiver ou sender pode ser um usuário comum ou lojista.
+- O usuario "lojista" não pode realizar tranferências.
 - Antes de finalizar, deve ser consultado o serviço de autorização.
 - Em caso de falha, a transação deve ser revertida.
 
 ## Notificações por Email
 
 - **Endpoint**: Realizado por meio de sistemas de email Django
+- Em caso de cadastro de email existente, tanto o sender quanto o receiver receberão emails.
 
 ## Autorização
 
