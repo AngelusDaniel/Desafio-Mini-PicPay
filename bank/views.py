@@ -29,7 +29,7 @@ class AccountView(APIView):
         try:
             account = Account.objects.get(user_id=user_id)
         except Account.DoesNotExist:
-            raise NotFound("Account not found.")
+            raise NotFound("Conta não encontrada.")
         
         user_name = request.user.name
 
@@ -53,7 +53,7 @@ class AccountView(APIView):
         """
         user_id = request.user.id 
         if Account.objects.filter(user_id=user_id).exists():
-            return Response({"detail": "Account already exists."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Conta já existe."}, status=status.HTTP_400_BAD_REQUEST)
         
         account = Account.objects.create(user_id=user_id)
         serializer = AccountSerializer(account)

@@ -17,21 +17,21 @@ def transferService(request, sender_id, receiver_id, value):
     try:
         sender_account = Account.objects.get(user_id=sender_id)
     except Account.DoesNotExist:
-        raise ValueError("Sender account not found.")
+        raise ValueError("Conta do remetende não encontrada.")
 
     try:
         receiver_account = Account.objects.get(user_id=receiver_id)
     except Account.DoesNotExist:
-        raise ValueError("Receiver account not found.")
+        raise ValueError("Conta de destinatário não encontrada.")
 
     if receiver_account.user.id == sender_account.user.id:
-        raise ValueError("Cannot transfer to the same account.")
+        raise ValueError("Não é possível transferir para a própria conta.")
 
     if request.user.lojista:
-        raise ValueError("unauthorized. Shopkeepers cannot make transfers")
+        raise ValueError("Não autorizado. Lojistas não podem realizar transferências.")
 
     if sender_account.balance < value:
-        raise ValueError("Insufficient balance.")
+        raise ValueError("Saldo insuficiente.")
 
     # Criar a transferência
     transfer = Transfer.objects.create(
