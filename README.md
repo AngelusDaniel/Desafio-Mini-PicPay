@@ -68,9 +68,9 @@ O projeto usa o Docker para criar um ambiente isolado para a aplicação e o ban
   }
 
 ### 4. Consulta de conta
-- **Endpoint**: `POST /account/`
+- **Endpoint**: `GET /account/`
 - **Descrição**: Retorna os detalhes da conta do usuario autenticado.
-- **Corpo da Requisição**:
+- **Resposta da Requisição**:
   ```json
   {
   "name": "teste user",
